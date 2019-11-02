@@ -14,11 +14,11 @@ class Solution:
             else:
                 pos, neg = 0, 1
 
-            if max<pos:
+            if max < pos:
                 max = pos
 
-            if pos <=0:
-                pos=1
+            if pos <= 0:
+                pos = 1
 
         return max
 
@@ -45,4 +45,4 @@ class TestSolution(TestCase):
 
         solution = Solution()
         for testcase in test_cases:
-            assert solution.maxProduct(testcase["input"]) == testcase["expected"]
+            self.assertEqual(solution.maxProduct(testcase["input"]), testcase["expected"])
