@@ -4,14 +4,11 @@ from unittest import TestCase
 
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        d = dict()
-        for i in range(0, len(numbers)):
-            if target - numbers[i] in d:
-                return [d[target-numbers[i]], i+1]
-            d[numbers[i]] = i+1
-        return []
-
-
+        dict = {}
+        for i, num in enumerate(numbers):
+            if num in dict.keys():
+                return [dict[num] + 1, i + 1]
+            dict[target - num] = i
 
 
 class TestSolution(TestCase):
