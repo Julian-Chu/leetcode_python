@@ -4,16 +4,11 @@ from unittest import TestCase
 
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
-        x, cnt = 0, 0
-        for _, v in enumerate(nums):
-            if x == v:
-                cnt += 1
-            elif cnt > 0:
-                cnt -= 1
-            else:
-                x = v
+        numSet = set(nums)
 
-        return x
+        for num in numSet:
+            if nums.count(num) > len(nums)/2:
+                return num
 
 
 class TestSolution(TestCase):
