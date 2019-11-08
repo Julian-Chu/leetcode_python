@@ -3,33 +3,24 @@ from unittest import TestCase
 
 class Solution:
     def numDecodings(self, s: str) -> int:
-        strVal = str(s)
-        n = len(strVal)
-        if n == 0:
+        s = str(s)
+        if not s or s[0] == '0':
             return 0
+        n = len(s)
 
-        bytes = [int(str.encode(e)) - int(str.encode('0')) for e in strVal]
-        print(bytes)
-        if bytes[0] == 0:
-            return 0
-        if n==1:
-            return 1
-        dp = [1]
-        last, lastTwo = bytes[0], 0
+        f = (3) * [0]
 
-        for i in range(1, n):
-            last, lastTwo = bytes[i], last * 10 + bytes[i]
-            dp.append(0)
-            if last > 0:
-                dp[i] += dp[i - 1]
+        f[1] = 1
+        f[0] = 1
 
-            if 26 >= lastTwo >= 10:
-                if i == 1:
-                    dp[i] += 1
-                else:
-                    dp[i] += dp[i - 2]
-
-        return dp[n - 1]
+        for i in range(2, n + 1):
+            one, two = 0, 0
+            if int(s[i - 2:i]) <= 26 and s[i - 2] != '0':
+                two = f[(i - 2) % 3]
+            if s[(i - 1)] != '0':
+                one = f[(i - 1) % 3]
+            f[i % 3] = one + two
+        return f[n % 3]
 
 
 class TestSolution(TestCase):
