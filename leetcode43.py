@@ -3,24 +3,30 @@ from unittest import TestCase
 
 class Solution:
     def multiply(self, num1: str, num2: str) -> str:
-        if num1[0] == '0' or num2 == '0':
-            return "0"
-        temp = [0] * (len(num1) + len(num2))
-        for i in range(len(num1)):
-            for j in range(len(num2)):
-                temp[i + j + 1] += (ord(num1[i]) - ord('0')) * (ord(num2[j]) - ord('0'))
+        values = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        val1 = 0
+        val2 = 0
+        m1 = 1
+        m2 = 1
 
-        temp = temp[::-1]
-        for i in range(len(temp)):
-            if temp[i] >= 10:
-                temp[i + 1] += temp[i] // 10
-                temp[i] = temp[i] % 10
+        for l1 in num1[::-1]:
+            val1 += values.index(l1) * m1
+            m1 *= 10
 
-        temp = temp[::-1]
-        if temp[0] == 0:
-            temp = temp[1:]
-        temp = [v + ord('0') for v in temp]
-        return bytes(temp).decode()
+        for l2 in num2[::-1]:
+            val2 += values.index(l2) * m2
+            m2 *= 10
+
+        prod = val1 * val2
+
+        res = ""
+        while prod != 0:
+            res = values[prod % 10] + res
+            prod //= 10
+
+        if res == "":
+            res = "0"
+        return res
 
 
 class TestSolution(TestCase):
