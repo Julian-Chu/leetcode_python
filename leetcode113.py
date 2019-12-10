@@ -1,17 +1,31 @@
+from typing import List
+
 from helper import TreeNode
 
 
 class Solution:
-    def minDepth(self, root: TreeNode) -> int:
-        if root is None:
-            return 0
-        if root.left is None and root.right is None:
-            return 1
+    def pathSum(self, root: TreeNode, sum: int) -> List[List[int]]:
+        if not root:
+            return []
+        res = []
+        curPath = []
+        res = self.recur(root, sum, res, curPath)
+        return res
 
-        l = self.minDepth(root.left)
-        r = self.minDepth(root.right)
+    def recur(self, node: TreeNode, sum: int, res: List[List[int]], curpath: List[int]) -> List[List[int]]:
+        if not node:
+            return res
 
-        if root.left is None or root.right is None:
-            return max(l, r) + 1
+        curpath = curpath.copy()
+        curpath.append(node.val)
+        if not node.left and not node.right:
+            if node.val == sum:
+                res.append(curpath)
+            return res
+        sum -= node.val
+        if node.left is not None:
+            res = self.recur(node.left, sum, res, curpath)
+        if node.right is not None:
+            res = self.recur(node.right, sum, res, curpath)
 
-        return min(l, r) + 1
+        return res
