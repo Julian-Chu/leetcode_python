@@ -17,14 +17,15 @@ class Solution:
 
         while len(queue) > 0:
             qLen = len(queue)
-            tmp = []
             for i in range(qLen):
-                if queue[i].left:
-                    tmp.append(queue[i].left)
-                    tmp.append(queue[i].right)
-                if i < qLen - 1:
-                    queue[i].next = queue[i + 1]
-            queue = tmp
+                node = queue.pop(0)
+                if i == qLen-1:
+                    node.next = None
+                else:
+                    node.next = queue[0]
+                if node.left:
+                    queue.append(node.left)
+                    queue.append(node.right)
 
         return root
 
