@@ -43,5 +43,5 @@ class Solution:
 class TestSolution(TestCase):
     def test_generateTrees(self):
         solution = Solution()
-        res = solution.generateTrees(3)
+        res = solution.generateTrees(4)
         self.assertEquals(res, [])
