@@ -1,3 +1,6 @@
+import collections
+
+
 class FriendshipService:
 
     def __init__(self):
