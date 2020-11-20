@@ -33,3 +33,39 @@ class Solution:
             return self.quickselect(n, nums, left, end)
 
         return nums[right + 1]
+
+
+class Solution:
+    """
+    @param n: An integer
+    @param nums: An array
+    @return: the Kth largest element
+    """
+
+    def kthLargestElement(self, n, nums):
+        left, right = 0 , len(nums)-1
+        pivotIndex = self.partition(nums, left, right)
+        while left<=right:
+            pivotIndex = self.partition(nums, left, right)
+            if pivotIndex == n-1:
+                return nums[pivotIndex]
+            elif pivotIndex > n-1:
+                right = pivotIndex - 1
+            else:
+                left = pivotIndex+1
+        return nums[n-1]
+
+    def partition(self, nums, start, end):
+        pivotIndex = start
+        pivot = nums[end]
+
+        for i in range(start, end):
+            if nums[i] > pivot:
+                nums[pivotIndex], nums[i] = nums[i], nums[pivotIndex]
+                pivotIndex += 1
+
+        nums[pivotIndex], nums[end] = nums[end], nums[pivotIndex]
+        return pivotIndex
+
+
+
