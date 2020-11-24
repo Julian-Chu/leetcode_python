@@ -22,7 +22,6 @@ class Solution:
 
         if k == 1:
             return min(A[index_a], B[index_b])
-         # a and b 's median'
         a = A[index_a + k // 2 - 1] if index_a + k // 2 <= len(A) else None
         b = B[index_b + k // 2 - 1] if index_b + k // 2 <= len(B) else None
 
