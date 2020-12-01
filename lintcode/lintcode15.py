@@ -32,3 +32,34 @@ class Solution:
             self.dfs(nums, visited, permutation, permutations)
             visited.remove(num)
             permutation.pop()
+
+
+class Solution:
+    """
+    @param: :  A list of integers
+    @return: A list of unique permutations
+    """
+
+    def permuteUnique(self, nums):
+        if not nums:
+            return [[]]
+
+        permutations = []
+        self.dfs(sorted(nums), set(), [], permutations)
+        return permutations
+
+    def dfs(self, nums, visited, permutation, permutations):
+        if len(nums) == len(permutation):
+            permutations.append(list(permutation))
+            return
+
+        for i, num in enumerate(nums):
+            if i in visited:
+                continue
+            if i > 0 and nums[i - 1] == nums[i] and (i - 1 not in visited):
+                continue
+            permutation.append(num)
+            visited.add(i)
+            self.dfs(nums, visited, permutation, permutations)
+            visited.remove(i)
+            permutation.pop()
