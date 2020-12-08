@@ -32,3 +32,35 @@ class Solution:
                         grid[next_row][next_col] = 1
                         queue.append([next_row, next_col])
         return -1
+
+
+class Solution:
+    """
+    @param grid: a chessboard included 0 and 1
+    @return: the shortest path
+    """
+
+    def shortestPath2(self, grid):
+        direction = [(1, 2), (-1, 2), (2, 1), (-2, 1)]
+
+        m = len(grid)
+        n = len(grid[0])
+
+        dp = [[float('inf')] * n for _ in range(m)]
+
+        dp[0][0] = 0
+
+        for j in range(n):
+            for i in range(m):
+                if grid[i][j] == 1:
+                    continue
+                for dx, dy in direction:
+                    if 0 <= i - dx < m and 0 <= j - dy < n:
+                        dp[i][j] = min(dp[i][j], dp[i - dx][j - dy] + 1)
+
+        print(dp)
+        if dp[m - 1][n - 1] == float('inf'):
+            return -1
+        return dp[m - 1][n - 1]
+
+
