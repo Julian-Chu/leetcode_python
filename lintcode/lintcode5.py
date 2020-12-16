@@ -6,9 +6,9 @@ class Solution:
     """
 
     def kthLargestElement(self, n, nums):
-        return self.quickselect(n, nums, 0, len(nums) - 1)
+        return self.partition(n, nums, 0, len(nums) - 1)
 
-    def quickselect(self, n, nums, start, end):
+    def partition(self, n, nums, start, end):
 
         if start == end:
             return nums[start]
@@ -28,9 +28,9 @@ class Solution:
                 right -= 1
 
         if n - 1 <= right:
-            return self.quickselect(n, nums, start, right)
+            return self.partition(n, nums, start, right)
         if n - 1 >= left:
-            return self.quickselect(n, nums, left, end)
+            return self.partition(n, nums, left, end)
 
         return nums[right + 1]
 
