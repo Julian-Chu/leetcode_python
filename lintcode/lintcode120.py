@@ -80,3 +80,68 @@ class Solution:
                             queue.append(next_word)
 
         return 0
+
+"""
+two way bfs
+"""
+class Solution:
+    """
+    @param: start: a string
+    @param: end: a string
+    @param: dict: a set of string
+    @return: An integer
+    """
+    import collections
+    def ladderLength(self, start, end, dict):
+
+        dict.add(start)
+        dict.add(end)
+        graph = self.construct_graph(dict)
+        print(graph)
+        forward_queue = collections.deque([start])
+        forward_set = set([start])
+        backward_queue = collections.deque([end])
+        backward_set = set([end])
+
+        distance = 1
+        while forward_queue and backward_queue:
+            distance += 1
+            if self.extend_queue(graph, forward_queue, forward_set, backward_set):
+                return distance
+            distance += 1
+            if self.extend_queue(graph, backward_queue, backward_set, forward_set):
+                return distance
+        return distance
+
+    def extend_queue(self, graph, queue, visited, opposite_visited):
+        for _ in range(len(queue)):
+            word = queue.popleft()
+            for next_word in graph[word]:
+                if next_word in visited:
+                    continue
+                if next_word in opposite_visited:
+                    return True
+                queue.append(next_word)
+                visited.add(next_word)
+        return False
+
+    def construct_graph(self, word_set):
+        graph = {}
+        for word in word_set:
+            graph[word] = self.get_next_words(word, word_set)
+        return graph
+
+    def get_next_words(self, word, word_set):
+        chars = "abcdefghijklmnopqrstuvwxyz"
+        next_words = set()
+        for i in range(len(word)):
+            prefix = word[:i]
+            suffix = word[i + 1:]
+            for ch in chars:
+                if word[i] == ch:
+                    continue
+                next_word = prefix + ch + suffix
+                if next_word in word_set:
+                    next_words.add(next_word)
+        return next_words
+
