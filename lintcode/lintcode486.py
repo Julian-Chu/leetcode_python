@@ -1,3 +1,6 @@
+"""
+offline
+"""
 class Solution:
     """
     @param arrays: k sorted integer arrays
@@ -24,7 +27,9 @@ class Solution:
 
         return result
 
-
+"""
+online
+"""
 class Solution:
     """
     @param arrays: k sorted integer arrays
@@ -44,6 +49,27 @@ class Solution:
             heapq.heappop(heap)
             if y + 1 < len(arrays[x]):
                 heapq.push(heap, (arrays[x][y + 1], x, y + 1))
+
+    def mergekSortedArrays(self, arrays):
+        if not arrays:
+            return []
+
+        heap = []
+
+        for i in range(len(arrays)):
+            if len(arrays[i]) == 0:
+                continue
+            heapq.heappush(heap, (arrays[i][0], i, 0))
+
+        res = []
+        while heap:
+            (num, arrs_index, arr_index) = heapq.heappop(heap)
+            res.append(num)
+            if arr_index + 1 < len(arrays[arrs_index]):
+                arr_index += 1
+                heapq.heappush(heap, (arrays[arrs_index][arr_index], arrs_index, arr_index))
+
+        return res
 
 
 class Solution:
@@ -84,3 +110,46 @@ class Solution:
             j += 1
 
         return array
+
+
+
+
+class Solution:
+    """
+    @param arrays: k sorted integer arrays
+    @return: a sorted array
+    """
+
+    def mergekSortedArrays(self, arrays):
+        if not arrays:
+            return []
+        while len(arrays) > 1:
+            next_arrays = []
+            for i in range(0, len(arrays), 2):
+                if i + 1 < len(arrays):
+                    arr = self.merge(arrays[i], arrays[i + 1])
+                    next_arrays.append(arr)
+                else:
+                    next_arrays.append(arrays[i])
+            arrays = next_arrays
+
+        return arrays[0]
+
+    def merge(self, arr1, arr2):
+        arr = []
+        i, j = 0, 0
+
+        while i < len(arr1) and j < len(arr2):
+            if arr1[i] > arr2[j]:
+                arr.append(arr2[j])
+                j += 1
+            else:
+                arr.append(arr1[i])
+                i += 1
+        while i < len(arr1):
+            arr.append(arr1[i])
+            i += 1
+        while j < len(arr2):
+            arr.append(arr2[j])
+            j += 1
+        return arr
