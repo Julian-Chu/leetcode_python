@@ -1,3 +1,38 @@
+
+class Solution:
+    def subsets(self, nums):
+        if not nums:
+            return [[]]
+        combinations = []
+        self.dfs(sorted(nums), 0, [], combinations)
+        return combinations
+
+
+    def dfs(self, nums, index, combination, combinations):
+        combinations.append(list(combination))
+
+        for i in range(index, len(nums)):
+            combination.append(nums[i])
+            self.dfs(nums, i + 1, combination, combinations)
+            combination.pop()
+
+
+class Solution:
+    def subsets(self, nums):
+        if not nums:
+            return [[]]
+        n = len(nums)
+        nums.sort()
+        results = []
+        for i in range(1 << n):
+            subset = []
+            for j in range(n):
+                if i & (1 << j) != 0:
+                    subset.append(nums[j])
+            results.append(subset)
+        return results
+
+
 class Solution:
     """
     @param nums: A set of numbers
