@@ -66,6 +66,3 @@ class Solution:
 
         nums[pivotIndex], nums[end] = nums[end], nums[pivotIndex]
         return pivotIndex
-
-
-
