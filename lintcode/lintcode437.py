@@ -40,3 +40,35 @@ def get_copiers(self, pages, time):
             last_copied += page
 
     return copiers
+
+
+class Solution:
+    """
+    @param pages: an array of integers
+    @param k: An integer
+    @return: an integer
+    """
+
+    def copyBooks(self, pages, k):
+        if not pages or not k:
+            return 0
+
+        n = len(pages)
+        dp = [[float('inf')] * (k + 1) for _ in range(n + 1)]
+
+        for j in range(k + 1):
+            dp[0][j] = 0
+
+        prefixSum = [0] * (n + 1)
+        for i in range(1, n + 1):
+            prefixSum[i] = prefixSum[i - 1] + pages[i - 1]
+
+        for i in range(1, n + 1):
+            for j in range(1, k + 1):
+                for prev in range(i):
+                    cost = prefixSum[i] - prefixSum[prev]
+                    dp[i][j] = min(dp[i][j], max(dp[prev][j - 1], cost))
+                    # print(cost)
+                    # print(dp)
+
+        return dp[n][k]
