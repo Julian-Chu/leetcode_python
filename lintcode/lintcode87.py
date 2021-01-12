@@ -15,6 +15,105 @@ class Solution:
     """
 
     def removeNode(self, root, value):
+        ans = self.inorder(root, value)
+        return self.build(ans, 0, len(ans) - 1)
+
+    def inorder(self, root, value):
+        if root is None:
+            return []
+        lefts = self.inorder(root.left, value)
+        if root.val != value:
+            lefts.append(root.val)
+        rights = self.inorder(root.right, value)
+        return lefts + rights
+
+    def build(self, nums, l, r):
+        if l == r:
+            node = TreeNode(nums[l])
+            return node
+        if l > r:
+            return None
+        mid = (l + r) // 2
+        node = TreeNode(nums[mid])
+        node.left = self.build(nums, l, mid - 1)
+        node.right = self.build(nums, mid + 1, r)
+        return node
+
+class Solution:
+    """
+    @param: root: The root of the binary search tree.
+    @param: value: Remove the node with given value.
+    @return: The root of the binary search tree after removal.
+    """
+    ans = []
+
+    def removeNode(self, root, value):
+        self.inorder(root, value)
+        return self.build(0, len(self.ans) - 1)
+
+    def inorder(self, root, value):
+        if root is None:
+            return
+
+        self.inorder(root.left, value)
+        if root.val != value:
+            self.ans.append(root.val)
+        self.inorder(root.right, value)
+
+    def build(self, l, r):
+        if l == r:
+            node = TreeNode(self.ans[l])
+            return node
+        if l > r:
+            return None
+        mid = (l + r) // 2
+        node = TreeNode(self.ans[mid])
+        node.left = self.build(l, mid - 1)
+        node.right = self.build(mid + 1, r)
+        return node
+
+
+class Solution:
+    """
+    @param: root: The root of the binary search tree.
+    @param: value: Remove the node with given value.
+    @return: The root of the binary search tree after removal.
+    """
+    def removeNode(self, root, value):
+        if not root:
+            return root
+
+        if value < root.val:
+            root.left = self.removeNode(root.left, value)
+        elif value > root.val:
+            root.right = self.removeNode(root.right, value)
+        else:
+            if root.left and root.right:
+                max = self.findMaxLessThan(root)
+                root.val = max.val
+                root.left = self.removeNode(root.left, max.val)
+            elif root.left:
+                root = root.left
+            elif root.right:
+                root = root.right
+            else:
+                root = None
+        return root
+
+    def findMaxLessThan(self, root):
+        node = root.left
+        while node.right:
+            node = node.right
+        return node
+
+class Solution:
+    """
+    @param: root: The root of the binary search tree.
+    @param: value: Remove the node with given value.
+    @return: The root of the binary search tree after removal.
+    """
+
+    def removeNode(self, root, value):
         if not root:
             return root
 
@@ -28,34 +127,14 @@ class Solution:
             next_node = self.find_next(root)
             if next_node == None:
                 return None
-            # print('next',next_node, next_node.left, next_node.right)
             if next_node != root.left:
                 next_node.left = root.left
             if next_node != root.right:
                 next_node.right = root.right
             root.left = None
             root.right = None
-            root = None
-            print('next', next_node, next_node.left, next_node.right)
             return next_node
 
-    def inorder(self, root):
-        stack = []
-        while root:
-            stack.append(root)
-            root = root.left
-
-        res = []
-        while stack:
-            node = stack.pop()
-            print(node.val)
-            res.append(node)
-            if node.right:
-                node = node.right
-                while node:
-                    stack.append(node)
-                    node = node.left
-        return res
 
     def find_next(self, root):
         if root.right:
