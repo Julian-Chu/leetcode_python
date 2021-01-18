@@ -1,3 +1,56 @@
+"""
+manacher
+"""
+class Solution:
+    """
+    @param s: input string
+    @return: a string as the longest palindromic substring
+    """
+
+    def longestPalindrome(self, s):
+        if not s:
+            return ""
+        # Using manacher's algorithm
+        # abba => #a#b#b#a#
+        chars = []
+        for c in s:
+            chars.append('#')
+            chars.append(c)
+        chars.append('#')
+
+        n = len(chars)
+        palindrome = [0] * n
+        palindrome[0] = 1
+
+        # mid: center for longest palindromic string
+        # longest: length of lonest palindromic string
+        mid, longest = 0, 1
+        for i in range(1, n):
+            length = 1
+            if mid + longest > i:
+                # j = 2 * id - i，也就是说 j 是 i 关于 id 的对称点(j = id - (i - id))
+                # if (mx - i > P[j])
+                #     P[i] = P[j];
+                # else /* P[j] >= mx - i */
+                #     P[i] = m
+                mirror = mid - (i - mid)
+                length = min(palindrome[mirror], mid + longest - i)
+
+            while i + length < len(chars) and i - length >= 0:
+                if chars[i + length] != chars[i - length]:
+                    break
+                length += 1
+
+            if length > longest:
+                longest = length
+                mid = i
+            palindrome[i] = length
+
+        longest = longest - 1
+        start = (mid - 1) // 2 - (longest - 1) // 2
+        return s[start:start + longest]
+
+
 class Solution:
     """
     @param s: input string
