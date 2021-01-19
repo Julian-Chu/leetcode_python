@@ -18,6 +18,7 @@ class Solution:
         aHash = []
         # prefix hash of s
         sHash = []
+        # seed^n
         base = []
         for i in a:
             tmp = 0
@@ -48,6 +49,9 @@ class Solution:
                 if i + aLen > slen:
                     continue
                 A = aHash[j]
+                # prefix sum of hash:  [0, s[0]%mod, (s[0]*seed + s[1]) %mod, (s[0]*seed^2 + s[1]*seed+s[2])%mod ....]
+                # hash of s[2:4] =  (s[0]*seed^2 + s[1]*seed+s[2])%mod - (s[0]%mod * seed^2)
+                # = prefix_sum_hash[1+2] - prefix_sum_hash[[1]* seed^2
                 S = (sHash[i + aLen] - base[aLen] * sHash[i]) % mod  # hash of s substring
                 A = A % mod
                 S = (S + mod) % mod  # avoid S < 0

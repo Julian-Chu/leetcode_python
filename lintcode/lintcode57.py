@@ -10,7 +10,6 @@ class Solution:
         res = []
         for i in range(len(numbers) - 2):
             if i > 0 and numbers[i] == numbers[i - 1]:
-                i += 1
                 continue
             num = numbers[i]
             start, end = i + 1, len(numbers) - 1
