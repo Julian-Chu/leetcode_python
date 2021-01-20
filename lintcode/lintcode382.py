@@ -21,3 +21,25 @@ class Solution:
                     left += 1
 
         return ans
+
+
+class Solution:
+    """
+    @param S: A list of integers
+    @return: An integer
+    """
+
+    def triangleCount(self, nums):
+        nums.sort()
+        total = 0
+        for i in range(len(nums)-2):
+            j, k = i+1, i+2
+            while k < len(nums):
+                if nums[k] - nums[j] < nums[i]:
+                    total += k-j
+                    k += 1
+                else:
+                    j += 1
+                if j == k:
+                    k += 1
+        return total
