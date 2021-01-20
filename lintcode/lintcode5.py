@@ -9,8 +9,7 @@ class Solution:
         return self.partition(n, nums, 0, len(nums) - 1)
 
     def partition(self, n, nums, start, end):
-
-        if start == end:
+        if start >= end:
             return nums[start]
         # pivotIndex = int(start + (end - start) / 2)
 
