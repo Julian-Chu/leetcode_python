@@ -7,7 +7,7 @@ class Solution:
     """
 
     def kClosestNumbers(self, A, target, k):
-        right = self.findUpperCloset(A, target)
+        right = self.findUpperClosest(A, target)
         left = right - 1
 
         results = []
@@ -44,7 +44,7 @@ class Solution:
         if A[start] >= target:
             return start
 
-        if A[end] >= end:
+        if A[end] >= target:
             return end
 
         return len(A)
