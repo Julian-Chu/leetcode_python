@@ -1,3 +1,13 @@
+"""
+Definition for a undirected graph node
+class UndirectedGraphNode:
+    def __init__(self, x):
+        self.label = x
+        self.neighbors = []
+"""
+import collections
+
+
 class Solution:
     """
     @param: graph: a list of Undirected graph node
@@ -8,16 +18,17 @@ class Solution:
     """
 
     def searchNode(self, graph, values, node, target):
-        visited = set()
+
         queue = collections.deque([node])
+        visited = set([node])
 
         while queue:
-            node = queue.popleft()
-            if values[node] == target:
-                return node
-            visited.add(node)
-            for next_node in node.neighbors:
-                if next_node in visited:
-                    continue
-                queue.append(next_node)
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                if values[node] == target:
+                    return node
+                for next_node in node.neighbors:
+                    if next_node not in visited:
+                        queue.append(next_node)
+                        visited.add(next_node)
         return None

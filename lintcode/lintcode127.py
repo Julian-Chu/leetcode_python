@@ -5,6 +5,7 @@ class DirectedGraphNode:
         self.label = x
         self.neighbors = []
 """
+import collections
 
 
 class Solution:
@@ -37,3 +38,5 @@ class Solution:
                 node_to_indegree[neighbor] += 1
 
         return node_to_indegree
+
+

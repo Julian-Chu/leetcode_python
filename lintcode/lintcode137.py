@@ -43,3 +43,36 @@ class Solution:
                     q.append(neighbor)
 
         return result
+
+
+class Solution:
+    """
+    @param node: A undirected graph node
+    @return: A undirected graph node
+    """
+
+    def cloneGraph(self, node):
+        if node is None:
+            return None
+        root = node
+        nodes = set()
+        queue = collections.deque([node])
+
+        while queue:
+            node_pop = queue.popleft()
+            if node_pop in nodes:
+                continue
+            nodes.add(node_pop)
+            for neighbor in node_pop.neighbors:
+                queue.append(neighbor)
+
+        clone_map = {}
+        for node in nodes:
+            clone_map[node] = UndirectedGraphNode(node.label)
+
+        for node in nodes:
+            clone_root = clone_map[node]
+            for neighbor in node.neighbors:
+                clone_root.neighbors.append(clone_map[neighbor])
+
+        return clone_map[root]
