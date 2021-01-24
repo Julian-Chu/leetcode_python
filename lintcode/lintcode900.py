@@ -30,3 +30,27 @@ class Solution:
         if abs(upper - target) <= abs(lower - target):
             return upper
         return lower
+
+
+class Solution:
+    """
+    @param root: the given BST
+    @param target: the given target
+    @return: the value in the BST that is closest to the target
+    """
+
+    def closestValue(self, root, target):
+        if not root:
+            return float('inf')
+
+        left = self.closestValue(root.left, target)
+        right = self.closestValue(root.right, target)
+
+        val = root.val
+
+        if abs(left - target) < abs(val - target):
+            val = left
+        if abs(right - target) < abs(val - target):
+            val = right
+
+        return val

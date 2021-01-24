@@ -12,6 +12,27 @@ class Solution:
     @param root: a TreeNode, the root of the binary tree
     @return: nothing
     """
+    prevNode = None
+
+    def flatten(self, root):
+        if not root:
+            return
+
+        if self.prevNode is not None:
+            self.prevNode.left = None
+            self.prevNode.right = root
+
+        self.prevNode = root
+        right = root.right
+        self.flatten(root.left)
+        self.flatten(right)
+
+
+class Solution:
+    """
+    @param root: a TreeNode, the root of the binary tree
+    @return: nothing
+    """
 
     def flatten(self, root):
         self.flatten_root(root)
