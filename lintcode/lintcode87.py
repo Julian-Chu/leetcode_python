@@ -15,24 +15,30 @@ class Solution:
     """
 
     def removeNode(self, root, value):
-        ans = self.inorder(root, value)
+        ans, found = self.inorder(root, value)
+        if not found:
+            return root
         return self.build(ans, 0, len(ans) - 1)
 
     def inorder(self, root, value):
+        found = False
         if root is None:
-            return []
-        lefts = self.inorder(root.left, value)
+            return [], False
+        lefts, left_found = self.inorder(root.left, value)
         if root.val != value:
             lefts.append(root.val)
-        rights = self.inorder(root.right, value)
-        return lefts + rights
+        else:
+            found = True
+        rights, right_found = self.inorder(root.right, value)
+        return lefts + rights, left_found or right_found or found
 
     def build(self, nums, l, r):
+        if l > r:
+            return None
         if l == r:
             node = TreeNode(nums[l])
             return node
-        if l > r:
-            return None
+
         mid = (l + r) // 2
         node = TreeNode(nums[mid])
         node.left = self.build(nums, l, mid - 1)

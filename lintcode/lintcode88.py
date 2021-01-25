@@ -25,10 +25,9 @@ class Solution:
         left = self.lowestCommonAncestor(root.left, A, B)
         right = self.lowestCommonAncestor(root.right, A, B)
 
-        if left is not None and right is not None:
-            return root
-        if left is not None:
+        if right is None:
             return left
-        if right is not None:
+        if left is None:
             return right
+        return root
 

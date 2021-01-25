@@ -61,3 +61,81 @@ class Solution:
             print(left, right)
 
         return inoder[left:right + 1]
+
+
+class Solution:
+    """
+    @param root: the given BST
+    @param target: the given target
+    @param k: the given k
+    @return: k values in the BST that are closest to the target
+    """
+
+    def closestKValues(self, root, target, k):
+        lower_stack = []
+
+        while root:
+            lower_stack.append(root)
+            if root.val > target:
+                root = root.left
+            else:
+                root = root.right
+
+        upper_stack = lower_stack[:]
+
+        if target < lower_stack[-1].val:
+            self.move_lower(lower_stack)
+        else:
+            self.move_upper(upper_stack)
+
+        result = []
+        for _ in range(k):
+            if lower_stack and upper_stack:
+                if abs(lower_stack[-1].val - target) < abs(upper_stack[-1].val - target):
+                    result.append(lower_stack[-1].val)
+                    self.move_lower(lower_stack)
+                else:
+                    result.append(upper_stack[-1].val)
+                    self.move_upper(upper_stack)
+            elif lower_stack:
+                result.append(lower_stack[-1].val)
+                self.move_lower(lower_stack)
+            elif upper_stack:
+                result.append(upper_stack[-1].val)
+                self.move_upper(upper_stack)
+            else:
+                break
+
+        return result
+
+    def move_lower(self, stack):
+        if not stack:
+            return
+
+        node = stack[-1]
+        if not node.left:
+            node = stack.pop()
+            while stack and stack[-1].left == node:
+                node = stack.pop()
+            return
+
+        node = node.left
+        while node:
+            stack.append(node)
+            node = node.right
+
+    def move_upper(self, stack):
+        if not stack:
+            return
+        node = stack[-1]
+        if not node.right:
+            node = stack.pop()
+            while stack and stack[-1].right == node:
+                node = stack.pop()
+            return
+
+        # push left node of curr node
+        node = node.right
+        while node:
+            stack.append(node)
+            node = node.left
