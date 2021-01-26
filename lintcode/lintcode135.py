@@ -20,7 +20,7 @@ class Solution:
 
         for i in range(index, len(candidates)):
             if candidates[i] > target:
-                continue
+                break  # prunning, because candidate is inorder
             if i > 0 and candidates[i - 1] == candidates[i]:
                 continue
             combination.append(candidates[i])

@@ -6,6 +6,36 @@ class Solution:
 
     def permute(self, nums):
         if not nums:
+            return [[]]
+
+        queue = collections.deque()
+
+        for num in nums:
+            queue.append([num])
+        result = []
+        while queue:
+            permutation = queue.popleft()
+            if len(permutation) == len(nums):
+                result.append(permutation)
+                continue
+
+            for num in nums:
+                if num in permutation:
+                    continue
+                next_p = permutation[:]
+                next_p.append(num)
+                queue.append(next_p)
+        return result
+
+
+class Solution:
+    """
+    @param: nums: A list of integers.
+    @return: A list of permutations.
+    """
+
+    def permute(self, nums):
+        if not nums:
             # 0!=1
             # 1!=1
             # 2!=2

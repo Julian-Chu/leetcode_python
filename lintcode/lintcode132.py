@@ -1,3 +1,84 @@
+"""
+use Trie
+"""
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_word = False
+        self.word = None
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def add(self, word):
+        node = self.root
+        for c in word:
+            if c not in node.children:
+                node.children[c] = TrieNode()
+            node = node.children[c]
+        node.is_word = True
+        node.word = word
+
+    def find(self, word):
+        node = self.root
+        for c in word:
+            node = node.children.get(c)
+            if node is None:
+                return None
+        return node
+
+
+class Solution:
+    DIRECTION = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    """
+    @param board: A list of lists of character
+    @param words: A list of string
+    @return: A list of string
+    """
+
+    def wordSearchII(self, board, words):
+        if not board or not words:
+            return []
+
+        trie = Trie()
+        for word in words:
+            trie.add(word)
+
+        results = set()
+        n, m = len(board), len(board[0])
+        visited = [[False] * m for _ in range(n)]
+        for i in range(n):
+            for j in range(m):
+                visited[i][j] = True
+                c = board[i][j]
+                self.dfs(board, i, j, trie.root.children.get(c), visited, results)
+                visited[i][j] = False
+        return list(results)
+
+    def dfs(self, board, x, y, node, visited, results):
+        if node is None:
+            return
+        if node.is_word:
+            results.add(node.word)
+        for dx, dy in self.DIRECTION:
+            next_x = x + dx
+            next_y = y + dy
+            if not self.isValid(board, next_x, next_y):
+                continue
+            if visited[next_x][next_y]:
+                continue
+            visited[next_x][next_y] = True
+            self.dfs(board, next_x, next_y, node.children.get(board[next_x][next_y]), visited, results)
+            visited[next_x][next_y] = False
+
+    def isValid(self, board, x, y):
+        return 0 <= x < len(board) and 0 <= y < len(board[0])
+
+
+"""
+normal
+"""
 class Solution:
     """
     @param board: A list of lists of character
@@ -43,6 +124,9 @@ class Solution:
             visited[new_x][new_y] = False
 
 
+"""
+prefix
+"""
 DX = [0, 1, -1, 0]
 DY = [1, 0, 0, -1]
 class Solution:

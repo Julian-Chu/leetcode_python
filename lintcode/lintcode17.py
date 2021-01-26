@@ -24,6 +24,7 @@ class Solution:
         n = len(nums)
         nums.sort()
         results = []
+        # all combination
         for i in range(1 << n):
             subset = []
             for j in range(n):
