@@ -20,13 +20,13 @@ class Trie:
         node.is_word = True
         node.word = word
 
-    def find(self, word):
-        node = self.root
-        for c in word:
-            node = node.children.get(c)
-            if node is None:
-                return None
-        return node
+    # def find(self, word):
+    #     node = self.root
+    #     for c in word:
+    #         node = node.children.get(c)
+    #         if node is None:
+    #             return None
+    #     return node
 
 
 class Solution:
