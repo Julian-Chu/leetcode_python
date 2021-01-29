@@ -12,7 +12,6 @@ class Solution:
             preifx_sum += num
             if preifx_sum in prefix_hash:
                 return [prefix_hash[preifx_sum] + 1, i]
-
             prefix_hash[preifx_sum] = i
 
         return [-1, -1]
