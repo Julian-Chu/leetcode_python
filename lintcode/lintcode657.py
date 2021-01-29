@@ -1,4 +1,5 @@
-class RandomizedSet: # golang slice concept
+# golang slice concept
+class RandomizedSet:
 
     def __init__(self):
         self.random_set = {}
@@ -53,6 +54,57 @@ class RandomizedSet: # golang slice concept
 # param = obj.remove(val)
 # param = obj.getRandom()
 
+import random
+
+"""
+random.seed()
+random.choice(list)
+"""
+class RandomizedSet:
+
+    def __init__(self):
+        self.val2index = {}
+        self.vals = []
+        random.seed()
+
+    """
+    @param: val: a value to the set
+    @return: true if the set did not already contain the specified element or false
+    """
+
+    def insert(self, val):
+        if val in self.val2index:
+            return False
+        self.val2index[val] = len(self.vals)
+        self.vals.append(val)
+        return True
+
+    """
+    @param: val: a value from the set
+    @return: true if the set contained the specified element or false
+    """
+
+    def remove(self, val):
+        vals, val2index = self.vals, self.val2index
+        if val not in val2index:
+            return False
+
+        index = val2index[val]
+        if index < len(vals) - 1:
+            last = vals[-1]
+            val2index[last] = index
+            vals[index] = last
+        del val2index[val]
+        vals.pop()
+
+        return True
+
+    """
+    @return: Get a random element from the set
+    """
+
+    def getRandom(self):
+        return random.choice(self.vals)
 
 import random
 
