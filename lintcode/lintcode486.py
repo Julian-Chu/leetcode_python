@@ -1,5 +1,6 @@
 """
 offline
+nlogn(bad)
 """
 class Solution:
     """
@@ -30,32 +31,19 @@ class Solution:
 """
 online
 """
+import heapq
+
+
 class Solution:
     """
     @param arrays: k sorted integer arrays
     @return: a sorted array
     """
-
-    def mergekSortedArrays(self, arrays):
-        result = []
-        heap = []
-        for index, array in enumerate(arrays):
-            if len(array) == 0:
-                continue
-            heapq.push(heap, (array[0], index, 0))
-
-        while len(heap):
-            val, x, y = heap[0]
-            heapq.heappop(heap)
-            if y + 1 < len(arrays[x]):
-                heapq.push(heap, (arrays[x][y + 1], x, y + 1))
-
     def mergekSortedArrays(self, arrays):
         if not arrays:
             return []
 
         heap = []
-
         for i in range(len(arrays)):
             if len(arrays[i]) == 0:
                 continue

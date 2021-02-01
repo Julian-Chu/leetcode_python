@@ -15,6 +15,8 @@ class Solution:
             if len(heap) < k:
                 heapq.heappush(heap, num)
             else:
+                if num <= heap[0]:
+                    continue
                 heapq.heappushpop(heap, num)
 
         heap.sort(reverse=True)

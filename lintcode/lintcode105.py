@@ -60,3 +60,33 @@ class Solution:
                 tail.random = hashmap[cur.random.label]
             cur = cur.next
         return dummy.next
+
+"""
+O(1) but TLE
+"""
+
+class Solution:
+    # @param head: A RandomListNode
+    # @return: A RandomListNode
+    def copyRandomList(self, head):
+        dummy = RandomListNode(None)
+
+        curr = head
+        copy_prev = dummy
+        while curr:
+            copy_prev.next = RandomListNode(curr.label)
+            curr = curr.next
+            copy_prev = copy_prev.next
+
+        curr = head
+        new_curr = dummy.next
+
+        while curr:
+            if curr.random:
+                label = curr.random.label
+                new_curr.random = self.findNode(dummy, label)
+
+            curr = curr.next
+            new_curr = new_curr.next
+
+        return dummy.next

@@ -47,6 +47,39 @@ class Solution:
 
         n, m = len(s), len(p)
         dp = [[False] * (m + 1) for _ in range(n + 1)]
+        # empty string match
+        dp[0][0] = True
+
+        for j in range(1, m + 1):
+            # 當s為empty, p只能為一或多個*
+            if p[j - 1] == '*':
+                dp[0][j] = dp[0][j - 1]
+
+        for i in range(1, n + 1):
+            for j in range(1, m + 1):
+                # s前i個跟p前j-1是否匹配  : *替換為""
+                # s前i-1個跟p前j個是否匹配 :  *替換長度不限
+                if p[j - 1] == '*':
+                    dp[i][j] = dp[i][j - 1] or dp[i - 1][j]
+                    continue
+                if p[j - 1] == '?' or s[i - 1] == p[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1]
+        return dp[n][m]
+
+"""
+rolling array
+"""
+
+class Solution:
+    """
+    @param s: A string
+    @param p: A string includes "?" and "*"
+    @return: is Match?
+    """
+
+    def isMatch(self, s, p):
+        n, m = len(s), len(p)
+        dp = [[False] * (m + 1) for _ in range(2)]
         dp[0][0] = True
 
         for j in range(1, m + 1):
@@ -54,10 +87,16 @@ class Solution:
                 dp[0][j] = dp[0][j - 1]
 
         for i in range(1, n + 1):
+            dp[i % 2][0] = False
             for j in range(1, m + 1):
                 if p[j - 1] == '*':
-                    dp[i][j] = dp[i][j - 1] or dp[i - 1][j]
+                    dp[i % 2][j] = dp[i % 2][j - 1] or dp[(i - 1) % 2][j]
                     continue
-                if p[j - 1] == '?' or s[i - 1] == p[j - 1]:
-                    dp[i][j] = dp[i - 1][j - 1]
-        return dp[n][m]
+                # if p[j-1] == '?' or p[j-1] == s[i-1]:
+                #     dp[i%2][j] = dp[(i-1)%2][j-1]
+                # else:
+                #     # rolling array要注意動態更新值
+                #     dp[i%2][j] = False
+                # 下面一行取代上方if else
+                dp[i % 2][j] = dp[(i - 1) % 2][j - 1] and (s[i - 1] == p[j - 1] or p[j - 1] == '?')
+        return dp[n % 2][m]

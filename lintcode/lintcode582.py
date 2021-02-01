@@ -1,4 +1,7 @@
-class Solution: # prunning
+"""
+prunning
+"""
+class Solution:
     """
     @param: s: A string
     @param: wordDict: A set of words.
