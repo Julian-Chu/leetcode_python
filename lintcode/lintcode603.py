@@ -1,5 +1,5 @@
 """
-timeout O(n^2)
+TLE O(n^2)
 """
 class Solution:
     # @param {int[]} nums a set of distinct positive integers
@@ -36,6 +36,7 @@ class Solution:
 dp只需要限制在nums的elements，
 針對每個num取得factors，  **怎麼取得factors
 在檢查factors是否在dp, 後在function去update
+O( n * sqrt(n))
 """
 class Solution:
     # @param {int[]} nums a set of distinct positive integers

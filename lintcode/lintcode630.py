@@ -64,3 +64,38 @@ class Solution:
         return dp[m - 1][n - 1]
 
 
+class Solution:
+    """
+    @param grid: a chessboard included 0 and 1
+    @return: the shortest path
+    """
+
+    def shortestPath2(self, grid):
+        if not grid or grid[0][0] == 1 or grid[-1][-1] == 1:
+            return -1
+
+        n, m = len(grid), len(grid[0])
+
+        dp = [[float('inf')] * 3 for _ in range(n)]
+        dp[0][0] = 0
+
+        backward_direction = [(-1, -2), (1, -2), (-2, -1), (2, -1)]
+
+        for y in range(1, m):
+            for x in range(n):
+                dp[x][y % 3] = float('inf')
+                if grid[x][y] == 1:
+                    continue
+                for dx, dy in backward_direction:
+                    prev_x, prev_y = x + dx, y + dy
+                    if not self.is_valid(grid, prev_x, prev_y):
+                        continue
+                    dp[x][y % 3] = min(dp[x][y % 3], dp[prev_x][prev_y % 3] + 1)
+
+        if dp[-1][(m - 1) % 3] == float('inf'):
+            return -1
+
+        return dp[-1][(m - 1) % 3]
+
+    def is_valid(self, grid, x, y):
+        return 0 <= x < len(grid) and 0 <= y < len(grid[0])
