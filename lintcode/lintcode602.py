@@ -1,30 +1,3 @@
-"""
-O(n^2) : timeout
-"""
-class Solution:
-    """
-    @param envelopes: a number of envelopes with widths and heights
-    @return: the maximum number of envelopes
-    """
-
-    def maxEnvelopes(self, envelopes):
-        # write your code here
-
-        if not envelopes:
-            return 0
-        envelopes.sort(key=lambda x: (x[0], x[1]))
-        n = len(envelopes)
-        dp = [1] * n
-
-        for i in range(n):
-            for j in range(i):
-                if self.can_fit(envelopes, i, j):
-                    print(i, j)
-                    dp[i] = max(dp[i], dp[j] + 1)
-        return max(dp)
-
-    def can_fit(self, envelopes, i, j):
-        return envelopes[j][0] < envelopes[i][0] and envelopes[j][1] < envelopes[i][1]
 
 """
 O(nlogn)
@@ -64,3 +37,31 @@ class Solution:
         if nums[start] >= target:
             return start
         return end
+"""
+O(n^2) : timeout
+"""
+class Solution:
+    """
+    @param envelopes: a number of envelopes with widths and heights
+    @return: the maximum number of envelopes
+    """
+
+    def maxEnvelopes(self, envelopes):
+        # write your code here
+
+        if not envelopes:
+            return 0
+        envelopes.sort(key=lambda x: (x[0], x[1]))
+        n = len(envelopes)
+        dp = [1] * n
+
+        for i in range(n):
+            for j in range(i):
+                if self.can_fit(envelopes, i, j):
+                    print(i, j)
+                    dp[i] = max(dp[i], dp[j] + 1)
+        return max(dp)
+
+    def can_fit(self, envelopes, i, j):
+        return envelopes[j][0] < envelopes[i][0] and envelopes[j][1] < envelopes[i][1]
+
