@@ -27,3 +27,32 @@ class Solution:
             index_b -= 1
 
         return res
+
+
+class Solution:
+    """
+    @param A: a string
+    @param B: a string
+    @return: return the sum of two strings
+    """
+
+    def SumofTwoStrings(self, A, B):
+        p_a, p_b = len(A) - 1, len(B) - 1
+
+        res = []
+        while p_a >= 0 and p_b >= 0:
+            num = int(A[p_a]) + int(B[p_b])
+            res.append(num)
+            p_a -= 1
+            p_b -= 1
+
+        while p_a >= 0:
+            res.append(int(A[p_a]))
+            p_a -= 1
+
+        while p_b >= 0:
+            res.append(int(B[p_b]))
+            p_b -= 1
+
+        res.reverse()
+        return ''.join([str(num) for num in res])

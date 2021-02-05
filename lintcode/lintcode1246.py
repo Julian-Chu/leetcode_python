@@ -55,7 +55,7 @@ class Solution:
             #                 ^
             if j - i - max_freq > k:
                 longest = max(longest, j - 1 - i)
-            else:
+            else: # j == n
                 longest = max(longest, j - i)
 
             counter[s[i]] -= 1
@@ -63,3 +63,28 @@ class Solution:
             max_freq = max(counter.values())
 
         return longest
+
+
+def characterReplacement(self, s, k):
+    # write your code here
+    if not s:
+        return 0
+
+    if k >= len(s):
+        return len(s)
+
+    counter = {}
+    left = 0
+    result = 0
+    maxlength = 0
+
+    for right in range(len(s)):
+        counter[s[right]] = counter.get(s[right], 0) + 1
+        maxlength = max(maxlength, counter[s[right]])
+        if right - left + 1 - maxlength > k:
+            counter[s[left]] -= 1
+            left += 1
+        else:
+            result = max(result, right - left + 1)
+
+    return result
