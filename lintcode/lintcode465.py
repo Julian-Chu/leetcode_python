@@ -71,3 +71,15 @@ class Solution:
                     break
                 count += 1
         return count
+
+    def get_sums_smaller_or_equal_2(self, A, B, val):
+        m, n = len(A), len(B)
+        i, j ,count = 0, n-1, 0
+        while i < m and j >=0:
+            if A[i] + B[j] >val:
+                j-=1
+            else:
+                # when i is fixed, all j makes sum smaller than mid => count sorting
+                count += j + 1
+                i += 1
+        return count

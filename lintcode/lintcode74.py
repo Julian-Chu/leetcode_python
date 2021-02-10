@@ -23,3 +23,4 @@ class Solution:
 
         if SVNRepo.isBadVersion(start):
             return start
+        return end
