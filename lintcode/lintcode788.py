@@ -1,3 +1,62 @@
+class Solution:
+    """
+    @param maze: the maze
+    @param start: the start
+    @param destination: the destination
+    @return: the shortest distance for the ball to stop at the destination
+    """
+
+    def shortestDistance(self, maze, start, destination):
+        if not maze:
+            return -1
+
+        start_x = start[0]
+        start_y = start[1]
+        end_x = destination[0]
+        end_y = destination[1]
+
+        minDist = float('inf')
+        queue = collections.deque([(start_x, start_y, 0)])
+
+        visited = {}
+
+        while queue:
+            for _ in range(len(queue)):
+                x, y, dist = queue.popleft()
+
+                if dist > minDist:
+                    continue
+
+                if (x, y) == (end_x, end_y):
+                    minDist = min(minDist, dist)
+
+                for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                    next_x = x
+                    next_y = y
+                    next_dist = dist
+                    while self.is_valid(maze, next_x + dx, next_y + dy):
+                        next_x = next_x + dx
+                        next_y = next_y + dy
+                        next_dist += 1
+                    if next_x == x and next_y == y:
+                        continue
+                    if (next_x, next_y) in visited and visited[(next_x, next_y)] < next_dist:
+                        continue
+                    queue.append((next_x, next_y, next_dist))
+                    visited[(next_x, next_y)] = next_dist
+
+        if minDist == float('inf'):
+            return -1
+        return minDist
+
+    def is_valid(self, maze, x, y):
+        if not (0 <= x < len(maze) and 0 <= y < len(maze[0])):
+            return False
+        if maze[x][y] == 1:
+            return False
+        return True
+
+
 """
 @param maze: the maze
 @param start: the start

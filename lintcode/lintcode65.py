@@ -1,3 +1,7 @@
+"""
+題目的even情況應該是 (n-1)//2   (n)//2
+
+"""
 class Solution:
     """
     @param: A: An integer array
@@ -8,9 +12,9 @@ class Solution:
     def findMedianSortedArrays(self, A, B):
         n = len(A) + len(B)
         if n % 2 == 1:
-            return self.findKth(A, 0, B, 0, n // 2 + 1)
+            return self.findKth(A, 0, B, 0, (n-1) // 2 + 1)
         else:
-            smaller = self.findKth(A, 0, B, 0, n // 2)
+            smaller = self.findKth(A, 0, B, 0, (n-1) // 2 + 1)
             bigger = self.findKth(A, 0, B, 0, n // 2 + 1)
             return (smaller + bigger) / 2
 

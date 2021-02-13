@@ -53,6 +53,7 @@ class Solution:
 
         while start + 1 < end:
             mid = (start + end) // 2
+            # 利用find first找到最小符合條件的數
             if self.get_sums_smaller_or_equal(A, B, mid) >= k:
                 end = mid
             else:

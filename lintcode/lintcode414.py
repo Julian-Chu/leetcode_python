@@ -1,3 +1,6 @@
+"""
+O(log(dividend/ divisor))
+"""
 class Solution:
     """
     @param dividend: the dividend
