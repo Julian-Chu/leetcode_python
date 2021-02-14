@@ -16,41 +16,45 @@ class Solution:
     def binaryTreePaths(self, root):
         if root is None:
             return []
-        self.paths = []
 
-        path = [root.val]
-        self.findPaths(root, path)
+        if root.left is None and root.right is None:
+            return [str(root.val)]
+
+        leftPaths = self.binaryTreePaths(root.left)
+        rightPaths = self.binaryTreePaths(root.right)
+
+        paths = []
+        for path in leftPaths + rightPaths:
+            paths.append(str(root.val) + '->' + path)
+
+        return paths
+
+
+class Solution:
+    """
+    @param root: the root of the binary tree
+    @return: all root-to-leaf paths
+    """
+
+    def binaryTreePaths(self, root):
+        if not root:
+            return []
+        paths = []
+        self.dfs(root, [], paths)
+        return paths
+
+    def dfs(self, root, path, paths):
+        if not root:
+            return
+
+        path.append(root.val)
+        if not root.left and not root.right:
+            paths.append("->".join([str(val) for val in path]))
+
+        self.dfs(root.left, path, paths)
+        self.dfs(root.right, path, paths)
         path.pop()
-        return self.paths
 
-    def findPaths(self, node, path):
-        if not node:
-            return
-
-        if not node.left and not node.right:
-            self.paths.append("->".join([str(val) for val in path]))
-            return
-
-        if node.left:
-            path.append(node.left.val)
-            self.findPaths(node.left, path)
-            path.pop()
-
-        if node.right:
-            path.append(node.right.val)
-            self.findPaths(node.right, path)
-            path.pop()
-
-        return
-
-
-"""
-Definition of TreeNode:
-class TreeNode:
-    def __init__(self, val):
-        self.val = val
-        self.left, self.right = None, None
-"""
 
 
 class Solution:

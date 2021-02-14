@@ -10,23 +10,42 @@ class TreeNode:
 class Solution:
     """
     @param root: The root of binary tree.
-    @return: True if this Binary tree is Balanced, or false.
+    @return: An integer
     """
 
-    def isBalanced(self, root):
-        is_balanced, _ = self.divideConquer(root)
-        return is_balanced
+    def maxDepth(self, root):
+        if not root:
+            return 0
 
-    def divideConquer(self, root):
-        if root is None:
-            return True, 0
+        left_height = self.maxDepth(root.left)
+        right_height = self.maxDepth(root.right)
 
-        is_left_balanced, left_height = self.divideConquer(root.left)
-        is_right_balanced, right_height = self.divideConquer(root.right)
         root_height = max(left_height, right_height) + 1
 
-        if not is_left_balanced or not is_right_balanced:
-            return False, root_height
-        if abs(left_height - right_height) > 1:
-            return False, root_height
-        return True, root_height
+        return root_height
+
+
+class Solution:
+    """
+    @param root: The root of binary tree.
+    @return: An integer
+    """
+
+    def maxDepth(self, root):
+        if not root:
+            return 0
+
+        queue = collections.deque([root])
+        depth = 0
+        while queue:
+            depth += 1
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+
+        return depth
+
+

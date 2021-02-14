@@ -65,3 +65,28 @@ class Solution:
 
         self.dfs(root.right, depth + 1, result)
         self.dfs(root.left, depth + 1, result)
+
+
+class Solution:
+    # @param {TreeNode} root the root of binary tree
+    # @return {ListNode[]} a lists of linked list
+    def binaryTreeToLists(self, root):
+        result = []
+        self.dfs(root, 1, result)
+        return result
+
+    def dfs(self, root, depth, result):
+        if not root:
+            return
+
+        node = ListNode(root.val)
+        if depth > len(result):
+            result.append(node)
+        else:
+            head = result[depth - 1]
+            while head.next:
+                head = head.next
+            head.next = node
+
+        self.dfs(root.left, depth + 1, result)
+        self.dfs(root.right, depth + 1, result)
