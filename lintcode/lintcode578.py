@@ -79,8 +79,6 @@ class Solution:
 """
 better bottom-up
 """
-
-
 class Solution:
     """
     @param: root: The root of the binary tree.
@@ -115,3 +113,38 @@ class Solution:
         if right_node:
             return a, b, right_node
         return a, b, None
+
+
+class Solution:
+    """
+    @param: root: The root of the binary tree.
+    @param: A: A TreeNode
+    @param: B: A TreeNode
+    @return: Return the LCA of the two nodes.
+    """
+
+    def lowestCommonAncestor3(self, root, A, B):
+        _, lca = self.helper(root, A, B)
+        return lca
+
+    def helper(self, root, A, B):
+        if root is None:
+            return False, None
+
+        left_found, left_lca = self.helper(root.left, A, B)
+        right_found, right_lca = self.helper(root.right, A, B)
+
+        if left_found and right_found:
+            return True, root
+
+        if root == A or root == B:
+            if left_found or right_found:
+                return True, root
+            return True, None
+
+        if left_found:
+            return True, left_lca
+        if right_found:
+            return True, right_lca
+
+        return False, None

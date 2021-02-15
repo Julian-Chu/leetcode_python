@@ -1,5 +1,7 @@
-import heapq
-
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
 
 class Solution:
     """
@@ -42,41 +44,86 @@ class Solution:
             b = b.next
         return dummyNode.next
 
+
+"""
+Definition of ListNode
+class ListNode(object):
+
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+"""
+
+
 class Solution:
     """
-    @param nums: A list of integers
-    @return: the median of numbers
+    @param lists: a list of ListNode
+    @return: The head of one sorted list.
     """
 
-    def medianII(self, nums):
-        maxheap = []
-        minheap = []
-        result = []
-        for num in nums:
-            if maxheap and num > -maxheap[0]:
-                heapq.heappush(minheap, num)
-                if len(minheap) > len(maxheap):
-                    heapq.heappush(maxheap, -heapq.heappop(minheap))
+    def mergeKLists(self, lists):
+        if len(lists) == 0:
+            return None
+        if len(lists) == 1:
+            return lists[0]
 
+        if len(lists) == 2:
+            return self.mergeTwoLists(lists[0], lists[1])
+
+        k = len(lists)
+        left = self.mergeKLists(lists[:k // 2])
+        right = self.mergeKLists(lists[k // 2:])
+
+        return self.mergeTwoLists(left, right)
+
+    def mergeTwoLists(self, a, b):
+        dummy = ListNode(-1)
+        head = dummy
+        while a and b:
+            if a.val < b.val:
+                head.next = a
+                a = a.next
             else:
-                heapq.heappush(maxheap, -num)
-                if len(maxheap) - len(minheap) > 1:
-                    heapq.heappush(minheap, -heapq.heappop(maxheap))
-            result.append(-maxheap[0])
-        return result
+                head.next = b
+                b = b.next
+            head = head.next
 
-    def medianII(self, nums):
-        max_heap, min_heap, output = [], [], []
+        if a:
+            head.next = a
 
-        for num in nums:
-            if len(max_heap) == len(min_heap):
-                if max_heap and num > -max_heap[0]:
-                    num = heapq.heappushpop(min_heap, num)
-                heapq.heappush(max_heap, -num)
-            else:
-                if num < -max_heap[0]:
-                    num = - heapq.heappushpop(max_heap, -num)
-                heapq.heappush(min_heap, num)
-            output.append(-max_heap[0])
-        return output
+        if b:
+            head.next = b
+        return dummy.next
 
+
+import heapq
+
+
+class Solution:
+    """
+    @param lists: a list of ListNode
+    @return: The head of one sorted list.
+    """
+
+    def mergeKLists(self, lists):
+        if not lists:
+            return None
+        heap = []
+        dummy = ListNode(-1)
+        tail = dummy
+
+        for i in range(len(lists)):
+            if lists[i]:
+                # push arrs_index , for the edge case,  value of nodes are equal
+                heapq.heappush(heap, (lists[i].val, i, lists[i]))
+
+        while heap:
+            _, arrs_index, node = heapq.heappop(heap)
+            tail.next = node
+            tail = tail.next
+
+            next_node = node.next
+            if next_node:
+                heapq.heappush(heap, (next_node.val, arrs_index, next_node))
+
+        return dummy.next
