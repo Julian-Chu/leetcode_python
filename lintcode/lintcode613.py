@@ -68,3 +68,28 @@ class Solution:
             average_score_dic[student_id] = sum(heap) / 5.0
 
         return average_score_dic
+
+
+class Solution:
+    # @param {Record[]} results a list of <student_id, score>
+    # @return {dict(id, average)} find the average of 5 highest scores for each person
+    # <key, value> (student_id, average_score)
+    def highFive(self, results):
+        students = {}
+
+        for record in results:
+            id, score = record.id, record.score
+            if id not in students:
+                students[id] = []
+
+            if len(students[id]) < 5:
+                heapq.heappush(students[id], score)
+            else:
+                heapq.heappushpop(students[id], score)
+
+        high_five_avg = {}
+        for id in students:
+            avg = sum(students[id]) / 5.0
+            high_five_avg[id] = avg
+
+        return high_five_avg
