@@ -4,7 +4,7 @@ class ThreeStacks:
     """
 
     def __init__(self, size):
-        self.stacks = [None] * 3 * (size + 1)
+        self.stacks = [None] * 3 * size  # size夠大 不用考慮extend，
         self.stackTop = [0, size, size * 2]
         self.stackBottom = [0, size, size * 2]  # dummy
 
