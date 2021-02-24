@@ -39,3 +39,36 @@ class Solution:
             output.append(-max_heap[0])
         return output
 
+
+class Solution:
+    def __init__(self):
+        self.maxheap = []
+        self.minheap = []
+
+    """
+    @param nums: A list of integers
+    @return: the median of numbers
+    """
+
+    def medianII(self, nums):
+        res = []
+        for num in nums:
+            if not self.maxheap:
+                heapq.heappush(self.maxheap, -num)
+            else:
+                if num > -self.maxheap[0]:
+                    heapq.heappush(self.minheap, num)
+                else:
+                    heapq.heappush(self.maxheap, -num)
+
+            while len(self.maxheap) - len(self.minheap) > 1:
+                item = heapq.heappop(self.maxheap)
+                heapq.heappush(self.minheap, -item)
+
+            while len(self.minheap) - len(self.maxheap) > 0:
+                item = heapq.heappop(self.minheap)
+                heapq.heappush(self.maxheap, -item)
+
+            res.append(-self.maxheap[0])
+
+        return res
