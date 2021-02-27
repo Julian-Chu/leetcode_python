@@ -29,3 +29,17 @@ class Solution:
             if r - c == row - col or r + c == row + col:
                 return False
         return True
+
+
+class Solution:
+    def totalNQueens(self, n: int) -> int:
+        self.res = 0
+        def dfs(r,cols,diff,add):
+            if r==n:
+                self.res += 1
+                return
+            for c in range(n):
+                if c not in cols and r-c not in diff and r+c not in add:
+                    dfs(r+1,cols+[c],diff+[r-c],add+[r+c])
+        dfs(0,[],[],[])
+        return self.res
