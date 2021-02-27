@@ -1,5 +1,4 @@
 # Definition for a binary tree node.
-import sys
 
 
 class TreeNode:

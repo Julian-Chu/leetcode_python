@@ -2,6 +2,7 @@ from typing import List
 
 from helper import TreeNode
 
+
 class Solution:
     def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
         res = self.BuildLevelOrder(root, [], 0)
