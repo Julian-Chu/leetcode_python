@@ -31,16 +31,12 @@ class Solution:
         for i in range(9):
             if board[i][col] == val:
                 return False
-        for j in range(9):
-            if board[row][j] == val:
+            if board[row][i] == val:
                 return False
-        r, c = row // 3 * 3, col // 3 * 3
-        for i in range(3):
-            for j in range(3):
-                if board[r + i][c + j] == val:
-                    return False
+            r, c = row // 3 * 3 + i//3, col // 3 * 3 +i % 3
+            if board[r][c] == val:
+                return False
         return True
-
 
 class Solution:
     """
@@ -49,10 +45,10 @@ class Solution:
     """
 
     def solveSudoku(self, board):
-        used = self.inital_used(board)
+        used = self.initial_used(board)
         self.dfs(board, 0, used)
 
-    def inital_used(self, board):
+    def initial_used(self, board):
         used = {
             'row': [set() for _ in range(9)],
             'col': [set() for _ in range(9)],

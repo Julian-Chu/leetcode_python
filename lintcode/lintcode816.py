@@ -11,14 +11,14 @@ class Solution:
         f = [
             [float('inf')] * (n + 1)
             for _ in range(state_size)
-        ]
+        ]   # f[x][y]  x: state,  y: destination which from previous state goes to
         f[1][1] = 0
         for state in range(state_size):
-            for i in range(2, n + 1):
+            for i in range(2, n + 1): # 1確定走過
                 if state & (1 << (i - 1)) == 0:
                     continue
                 prev_state = state ^ (1 << (i - 1))
-                for j in range(1, n + 1):
+                for j in range(1, n + 1):  # 前一個狀態有可能是由1開始,  enumerate all possible previous destination
                     if prev_state & (1 << (j - 1)) == 0:
                         continue
                     f[state][i] = min(f[state][i], f[prev_state][j] + graph[j][i])
