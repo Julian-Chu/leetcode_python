@@ -19,6 +19,33 @@ class Solution:
                 self.dfs(n // i, i, combination, combinations)
                 combination.pop()
 
+
+class Solution:
+    """
+    @param n: An integer
+    @return: a list of combination
+    """
+
+    def getFactors(self, n):
+        return self.dfs(n, {})
+
+    def dfs(self, n, memo):
+        if n in memo:
+            return memo[n]
+
+        partitions = []
+        bound = int(n ** 0.5)
+        for i in range(2, bound + 1):
+            if n % i == 0:
+                partitions.append([i, n // i])
+                subs = self.dfs(n // i, memo)
+                for sub in subs:
+                    if i > sub[0]:
+                        continue
+                    partitions.append([i] + sub)
+        memo[n] = partitions
+        return partitions
+
 class Solution:
     """
     @param n: An integer
