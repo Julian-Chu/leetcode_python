@@ -17,6 +17,7 @@ class Solution:
             if nums[mid] < target:
                 start = mid
             elif nums[mid] == target:
+                #  move start
                 start = mid
             else:
                 end = mid
@@ -39,6 +40,7 @@ class Solution:
             if nums[mid] < target:
                 start = mid
             elif nums[mid] == target:
+                # move end
                 end = mid
             else:
                 end = mid
