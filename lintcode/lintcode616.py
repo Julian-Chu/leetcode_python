@@ -1,3 +1,6 @@
+import collections
+
+
 class Solution:
     """
     @param: numCourses: a total of n courses
