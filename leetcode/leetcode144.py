@@ -31,3 +31,21 @@ class Solution:
                         stack = stack[:-1]
 
         return res
+
+
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        if root is None:
+            return []
+        res = []
+
+        def traverse(node: TreeNode):
+            if node is None:
+                return
+
+            res.append(node.val)
+            traverse(node.left)
+            traverse(node.right)
+
+        traverse(root)
+        return res
