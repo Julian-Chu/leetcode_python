@@ -17,3 +17,7 @@ def convertIntsToStrs():
     arr = [i for i in range(3)]
 
     strs = [str(i) for i in arr]
+
+def reverse():
+    s = [1,2,3]
+    rev = s[::-1]

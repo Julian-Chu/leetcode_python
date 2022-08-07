@@ -16,3 +16,18 @@ class Solution:
                 return [self.count[target-num], i]
             self.count[num] = i
         return [-1, -1]
+
+    def remove_key(self):
+        my_dict = {}
+        #  To delete a key regardless of whether it is in the dictionary, use the two-argument form of
+        my_dict.pop('key', None)
+
+        # To delete a key that is guaranteed to exist, you can also use
+        del my_dict['key']
+
+    def get_default(self):
+        dict = {}
+        # return None
+        val = dict.get("key")
+        # return default 0
+        val = dict.get("key", 0)
