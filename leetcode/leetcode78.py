@@ -21,3 +21,27 @@ class Solution:
             res = tmp
 
         return res
+
+
+class Solution:
+    def __init__(self):
+        self.res = []
+        self.tmp = []
+
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        if not nums:
+            return []
+
+        self.dfs(nums, 0)
+        return self.res
+
+    def dfs(self, nums: List[int], start_index: int):
+        self.res.append(self.tmp[:])
+        if start_index >= len(nums):
+            return
+
+        for i in range(start_index, len(nums)):
+            num = nums[i]
+            self.tmp.append(num)
+            self.dfs(nums, i + 1)
+            self.tmp.pop()
