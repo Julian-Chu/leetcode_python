@@ -31,3 +31,20 @@ class Solution:
         val = dict.get("key")
         # return default 0
         val = dict.get("key", 0)
+
+    def methods(self):
+        car = {
+            "brand": "Ford",
+            "model": "Mustang",
+            "year": 1964
+        }
+
+        x = car.items()
+        # x = car.values()
+        # x = car.keys
+
+        print(x)  # before the change
+
+        car["color"] = "red"
+
+        print(x)  # after the change
