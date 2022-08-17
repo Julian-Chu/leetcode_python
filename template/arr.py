@@ -21,3 +21,7 @@ def convertIntsToStrs():
 def reverse():
     s = [1,2,3]
     rev = s[::-1]
+
+
+def twoDArray():
+    matrix = [[0]*5 for i in range(5)]
