@@ -25,3 +25,5 @@ def reverse():
 
 def twoDArray():
     matrix = [[0]*5 for i in range(5)]
+
+    tmp = ['Q' if j == cols[i] else '.' for j in range(n)]

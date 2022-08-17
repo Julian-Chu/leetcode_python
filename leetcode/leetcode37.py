@@ -54,3 +54,42 @@ class Solution:
 
     def get_box_index(self, row, col):
         return row // 3 * 3 + col // 3
+
+class Solution:
+    def solveSudoku(self, board: List[List[str]]) -> None:
+        self.dfs(board)
+
+
+    def dfs(self, board: List):
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] != ".":
+                    continue
+
+                for k in range(1, 10):
+                    val = str(k)
+                    if not self.isValid(board, i, j , val):
+                        continue
+                    board[i][j] = val
+                    if self.dfs(board):
+                        return True
+                    board[i][j] = "."
+                return False
+        return True
+
+    def isValid(self, board, row, col , val):
+        for idx in range(9):
+            if board[idx][col] == val:
+                return False
+
+            if board[row][idx] == val:
+                return False
+
+            row_start = row//3 * 3
+            col_start = col//3 * 3
+
+            for i in range(row_start, row_start+3):
+                for j in range(col_start, col_start+3):
+                    if board[i][j] == val:
+                        return False
+        return True
