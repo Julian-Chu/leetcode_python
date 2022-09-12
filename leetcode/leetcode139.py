@@ -79,3 +79,14 @@ class Solution:
             return memo[start]
 
         return dfs(s, set(wordDict), 0, {})
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dp = [False] * len(s)
+
+        for i in range(0, len(s)):
+            for j in range(0, i+1):
+                word = s[j:i+1]
+                dp[i] = dp[i] or (word in wordDict and (j==0 or dp[j-1] == True))
+
+        return dp[-1]
